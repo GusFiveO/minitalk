@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:45 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/08 17:14:34 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/08 21:04:35 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	send_sig(int pid, int sig)
 		send_sig(pid, sig);
 	}
 	tries = 0;
+	usleep(100);
 }
 
 void	manage_sig(char *s_pid, char *str)
@@ -73,12 +74,16 @@ void	manage_sig(char *s_pid, char *str)
 
 void	handle_sigusr(int sig)
 {
-	static int send_bytes;
+	static int bits_received = 0;
 
 	if (sig == SIGUSR1)
+	{
+		if (bits_received % 8)
+			ft_printf("Bits lost");
 		ft_printf("Message received\n");
+	}
 	if (sig == SIGUSR2)
-		send_bytes++;
+		bits_received++;
 }
 
 int main(int argc, char **argv)
@@ -94,5 +99,6 @@ int main(int argc, char **argv)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	manage_sig(argv[1], argv[2]);
+	usleep(200);
 	return (0);
 }

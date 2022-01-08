@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:32 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/08 17:24:44 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/08 21:05:58 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	acknowledgement(int c_pid, int idx)
 		if (count == 8)
 		{
 			if(kill(c_pid, SIGUSR1) == -1)
-				exit(1);
+				ft_printf("Cannot send SIGSUR1 to client\n");
 			return (1);
 		}
 	}
@@ -67,8 +67,7 @@ void	concat(char *str)
 	old_len = ft_strlen(g_talk.str) + 1;
 	new_len = old_len + ft_strlen(str);
 	new_str = malloc(sizeof(char) * (new_len + 1));
-	ft_printf("new len = %d\n", new_len);
-	new_str[0] = 0;
+	new_str[0] = '\0';
 	ft_strlcat2(new_str, g_talk.str);
 	ft_strlcat2(new_str, str);
 	new_str[new_len] = 0;
@@ -80,7 +79,12 @@ void	manage_buffer(int idx)
 {
 	char	*str;
 
-	str = malloc(sizeof(char) * (idx / 8));
+	if (!g_talk.str)
+	{
+		g_talk.str = malloc(sizeof(char));
+		g_talk.str[0] = '\0';
+	}
+	str = malloc(sizeof(char) * (idx / 8) + 1);
 	convert_buff(str, idx);
 	concat(str);
 	free(str);
@@ -88,8 +92,13 @@ void	manage_buffer(int idx)
 
 void	flush_str()
 {
-	ft_printf("%s\n", g_talk.str);
-	g_talk.str[0] = 0;
+	int i;
+	
+	i = ft_printf("%s\n", g_talk.str);
+	ft_printf("bytes received: %d\n", i);
+/* 	(void)i; */
+	free(g_talk.str);
+	g_talk.str = NULL;
 }
 
 void	sig_pid(int sig, siginfo_t *info, void *content)
@@ -102,17 +111,14 @@ void	sig_pid(int sig, siginfo_t *info, void *content)
 	if (idx < BUFFER_SIZE)
 	{
 		if (sig == SIGUSR1)
-		{
 			g_talk.buffer[idx] = '1';
-		}
 		else if (sig == SIGUSR2)
-		{
 			g_talk.buffer[idx] = '0';
-		}
 		idx++;
-		usleep(600);
+		usleep(300);
 		g_talk.buffer[idx + 1] = 0;
-		kill(c_pid, SIGUSR2);
+		if (kill(c_pid, SIGUSR2) == -1)
+			ft_printf("Cannot send SIGUSR2 to client\n");
 	}
 	if (idx >= BUFFER_SIZE)
 		manage_buffer(idx);
@@ -130,8 +136,6 @@ int main()
 {
 	struct sigaction	sa;
 
-	g_talk.str = malloc(sizeof(char));
-	g_talk.str[0] = '\0';
 	ft_printf("PID: %d\n", getpid());
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_SIGINFO;
