@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:45 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/07 18:33:27 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/08 12:54:59 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	handle_sigusr(int sig)
 	static int send_bytes;
 
 	if (sig == SIGUSR1)
-		ft_printf("Message received");
+		ft_printf("Message received\n");
 	if (sig == SIGUSR2)
 		send_bytes++;
 }

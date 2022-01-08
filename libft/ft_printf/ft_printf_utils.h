@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: augustinlorain <augustinlorain@student.    +#+  +:+       +#+        */
+/*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:37:20 by alorain           #+#    #+#             */
-/*   Updated: 2021/12/12 17:00:44 by augustinlor      ###   ########.fr       */
+/*   Updated: 2022/01/08 14:54:46 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ size_t	parse_flags(const char *str, t_printf *flag);
 
 	/* buffer.c */
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 120
+# ifndef PRINTF_BUFFER_SIZE
+#  define PRINTF_BUFFER_SIZE 128
 # endif
 
 size_t	manage_buff(char *str, size_t n);

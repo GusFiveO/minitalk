@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:14:51 by alorain           #+#    #+#             */
-/*   Updated: 2021/12/11 12:57:38 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/08 14:51:26 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static size_t	concat_buff(char *buffer, char *str, size_t n, size_t idx)
 
 	i = idx;
 	j = 0;
-	while (j < n && (i + j) < BUFFER_SIZE + 1)
+	while (j < n && (i + j) < PRINTF_BUFFER_SIZE + 1)
 	{
 		buffer[i + j] = str[j];
 		j++;
@@ -43,7 +43,7 @@ static void	manage_buff2(char *buf, size_t *i, size_t n, char *str)
 	b_ad = concat_buff(buf, str, n, *i);
 	new_n = n - b_ad;
 	*i += b_ad;
-	if (n + *i > BUFFER_SIZE)
+	if (n + *i > PRINTF_BUFFER_SIZE)
 	{
 		flush_buff(buf, i);
 		manage_buff(&str[b_ad], new_n);
@@ -52,7 +52,7 @@ static void	manage_buff2(char *buf, size_t *i, size_t n, char *str)
 
 size_t	manage_buff(char *str, size_t n)
 {
-	static char		buffer[BUFFER_SIZE + 1];
+	static char		buffer[PRINTF_BUFFER_SIZE + 1];
 	static size_t	idx = 0;
 	static size_t	printed_char = 0;
 	size_t			temp;
