@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:45 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/08 12:54:59 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/08 17:14:34 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,55 +17,6 @@ void	correct_use()
 	ft_printf("[ERROR] Correct usage: ./client [PID] [content].\n");
 	exit(1);	
 }
-
-/* void	send_sig(int pid, unsigned char byte)
-{
-	static int	tries;
-	int				i;
-
-	i = 1<<7;
-	while (i)
-	{
-		if (byte&i)
-		{
-			if (kill(pid, SIGUSR1) == -1)
-				exit(1);
-		}
-		else
-		{
-			if (kill(pid, SIGUSR2) == -1)
-				exit(1);
-		}
-		if (usleep(1000000) == 0)
-		{
-			tries++;
-			ft_printf("Si\n");
-			if (tries == 3)
-			{
-				ft_printf("Signal not received\n");
-				exit(1);
-			}
-			send_sig(pid, byte);
-		}
-		i >>= 1;
-		tries = 0;
-	}
-}
-
-void	manage_sig(char *s_pid, char *str)
-{
-	int	pid;
-	int	i;
-
-	i = 0;
-	pid = ft_atoi(s_pid);
-	while (str[i])
-	{
-		send_sig(pid, str[i]);
-		i++;
-	} 
-	send_sig(pid, str[i]);
-} */
 
 void	send_sig(int pid, int sig)
 {
