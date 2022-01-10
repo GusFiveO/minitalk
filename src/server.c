@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:32 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/08 21:05:58 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/10 13:07:28 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_talk g_talk;
 
-int	acknowledgement(int c_pid, int idx)
+int	acknowledgement()
 {
 	int i;
 	int count;
 
-	i = idx;
+	i = g_talk.idx;
 	count = 0;
 	if ( i && i % 8 == 0)
 	{
-		while (i > idx - 8 - 1)
+		while (i > g_talk.idx - 8 - 1)
 		{
 			if (g_talk.buffer[i] == '0')
 				count++;
@@ -31,7 +31,7 @@ int	acknowledgement(int c_pid, int idx)
 		}
 		if (count == 8)
 		{
-			if(kill(c_pid, SIGUSR1) == -1)
+			if(kill(g_talk.c_pid, SIGUSR1) == -1)
 				ft_printf("Cannot send SIGSUR1 to client\n");
 			return (1);
 		}
@@ -96,40 +96,26 @@ void	flush_str()
 	
 	i = ft_printf("%s\n", g_talk.str);
 	ft_printf("bytes received: %d\n", i);
-/* 	(void)i; */
 	free(g_talk.str);
 	g_talk.str = NULL;
 }
 
 void	sig_pid(int sig, siginfo_t *info, void *content)
 {
-	static int	idx = 0;
-	int			c_pid;
-
 	(void)content;
-	c_pid = info->si_pid;
-	if (idx < BUFFER_SIZE)
+	g_talk.c_pid = info->si_pid;
+	if (g_talk.idx < BUFFER_SIZE)
 	{
 		if (sig == SIGUSR1)
-			g_talk.buffer[idx] = '1';
+			g_talk.buffer[g_talk.idx] = '1';
 		else if (sig == SIGUSR2)
-			g_talk.buffer[idx] = '0';
-		idx++;
+			g_talk.buffer[g_talk.idx] = '0';
+		g_talk.idx++;
 		usleep(300);
-		g_talk.buffer[idx + 1] = 0;
-		if (kill(c_pid, SIGUSR2) == -1)
+		g_talk.buffer[g_talk.idx + 1] = 0;
+		if (kill(g_talk.c_pid, SIGUSR2) == -1)
 			ft_printf("Cannot send SIGUSR2 to client\n");
 	}
-	if (idx >= BUFFER_SIZE)
-		manage_buffer(idx);
-	if (acknowledgement(c_pid, idx))
-	{
-		manage_buffer(idx);
-		flush_str();
-		idx = 0;
-	}
-	else if (idx >= BUFFER_SIZE)
-		idx = 0;
 }
 
 int main()
@@ -145,6 +131,16 @@ int main()
 	while (1)
 	{
 		pause();
+		if (g_talk.idx >= BUFFER_SIZE)
+			manage_buffer(g_talk.idx);
+		if (acknowledgement())
+		{
+			manage_buffer(g_talk.idx);
+			flush_str();
+			g_talk.idx = 0;
+		}
+		else if (g_talk.idx >= BUFFER_SIZE)
+			g_talk.idx = 0;
 	}
 	return (0);
 }
