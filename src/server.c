@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:32 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/10 13:07:28 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/10 16:51:49 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	sig_pid(int sig, siginfo_t *info, void *content)
 		else if (sig == SIGUSR2)
 			g_talk.buffer[g_talk.idx] = '0';
 		g_talk.idx++;
-		usleep(300);
+		usleep(400);
 		g_talk.buffer[g_talk.idx + 1] = 0;
 		if (kill(g_talk.c_pid, SIGUSR2) == -1)
 			ft_printf("Cannot send SIGUSR2 to client\n");

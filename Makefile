@@ -9,7 +9,7 @@ OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.c=.o))
 SERVER = server
 CLIENT = client
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror
 INCPATH = -I $(INC_DIR) -I $(LIBFT_DIR)includes/
 
 LIBFT = libft/libft.a
