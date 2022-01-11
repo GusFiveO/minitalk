@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:41:44 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 11:46:59 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:48:03 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_talk
 	int		idx;
 	char	*str;
 	int		c_pid;
+	int		time_offset;
 
 }	t_talk;
 

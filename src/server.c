@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:31:41 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 13:11:32 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/11 17:07:17 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	manage_buffer(void)
 		g_talk.str[0] = '\0';
 	}
 	concat();
+	g_talk.time_offset += 1;
 }
 
 void	sig_pid(int sig, siginfo_t *info, void *content)
@@ -88,7 +89,7 @@ void	sig_pid(int sig, siginfo_t *info, void *content)
 		else if (sig == SIGUSR2)
 			g_talk.buffer[g_talk.idx] = '0';
 		g_talk.idx++;
-		usleep(600);
+		usleep(400 + g_talk.time_offset);
 		g_talk.buffer[g_talk.idx + 1] = 0;
 		if (kill(g_talk.c_pid, SIGUSR2) == -1)
 			ft_printf("Cannot send SIGUSR2 to client\n");
@@ -117,6 +118,7 @@ int	main(void)
 			free(g_talk.str);
 			g_talk.str = NULL;
 			g_talk.idx = 0;
+			g_talk.time_offset = 0;
 		}
 		else if (g_talk.idx >= BUFFER_SIZE)
 			g_talk.idx = 0;

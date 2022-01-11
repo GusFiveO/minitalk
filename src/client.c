@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:45 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 13:11:54 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/11 16:38:37 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	send_sig(int pid, int sig)
 		send_sig(pid, sig);
 	}
 	tries = 0;
-	usleep(200);
+	usleep(100);
 }
 
 void	manage_sig(char *s_pid, char *str)
