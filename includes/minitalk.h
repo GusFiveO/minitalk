@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:41:44 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/10 16:10:05 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/11 11:46:59 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@
 # define BUFFER_SIZE 256
 
 char	ft_bitoa(char *str);
-void	ft_strlcat2(char *s1, char *s2);
+int		ft_strlcat2(char *s1, char *s2);
 
 typedef struct s_talk
 {

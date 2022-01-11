@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 15:49:12 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/08 17:04:54 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/11 13:04:14 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	_power(int n, int power)
 		return (1);
 }
 
-void	ft_strlcat2(char *s1, char *s2)
+int	ft_strlcat2(char *s1, char *s2)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -34,14 +34,15 @@ void	ft_strlcat2(char *s1, char *s2)
 		s1[i + j] = s2[j];
 		j++;
 	}
-	s1[i+j] = 0;
+	s1[i + j] = 0;
+	return (i + j);
 }
 
 char	ft_bitoa(char *str)
 {
 	int		i;
 	int		count;
-	int 	asc;
+	int		asc;
 
 	i = 0;
 	asc = 0;
