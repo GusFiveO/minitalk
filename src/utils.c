@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 15:49:12 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 13:04:14 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:02:47 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ char	ft_bitoa(char *str)
 		i++;
 	}
 	return (asc);
+}
+
+void	quit(char *str)
+{
+	free(str);
+	exit(1);
+}
+
+void	reset_struct(t_talk *talk)
+{
+	talk->str = NULL;
+	talk->idx = 0;
+	talk->time_offset = 0;
 }

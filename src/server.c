@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 11:31:41 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 17:07:17 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:01:54 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,15 @@ void	concat(void)
 	old_len = ft_strlen(g_talk.str) + 1;
 	new_len = old_len + g_talk.idx / 8;
 	new_str = malloc(sizeof(char) * (new_len + 1));
+	if (!new_str)
+		quit(g_talk.str);
 	new_str[0] = '\0';
 	idx_str = ft_strlcat2(new_str, g_talk.str);
 	i = 0;
 	while (i <= g_talk.idx)
 	{
 		if (i && i % 8 == 0)
-		{
-			new_str[idx_str] = ft_bitoa(&g_talk.buffer[i - 8]);
-			idx_str++;
-		}
+			new_str[idx_str++] = ft_bitoa(&g_talk.buffer[i - 8]);
 		i++;
 	}
 	new_str[idx_str] = '\0';
@@ -72,6 +71,8 @@ void	manage_buffer(void)
 	if (!g_talk.str)
 	{
 		g_talk.str = malloc(sizeof(char));
+		if (!g_talk.str)
+			exit(1);
 		g_talk.str[0] = '\0';
 	}
 	concat();
@@ -116,9 +117,7 @@ int	main(void)
 			manage_buffer();
 			ft_printf("bytes received: %d\n", ft_printf("%s\n", g_talk.str));
 			free(g_talk.str);
-			g_talk.str = NULL;
-			g_talk.idx = 0;
-			g_talk.time_offset = 0;
+			reset_struct(&g_talk);
 		}
 		else if (g_talk.idx >= BUFFER_SIZE)
 			g_talk.idx = 0;

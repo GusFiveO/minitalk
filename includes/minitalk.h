@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:41:44 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 16:48:03 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/12 16:02:31 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@
 
 # define BUFFER_SIZE 256
 
-char	ft_bitoa(char *str);
-int		ft_strlcat2(char *s1, char *s2);
-
 typedef struct s_talk
 {
 	char	buffer[BUFFER_SIZE + 1];
@@ -70,5 +67,10 @@ typedef struct s_talk
 	int		time_offset;
 
 }	t_talk;
+
+char	ft_bitoa(char *str);
+int		ft_strlcat2(char *s1, char *s2);
+void	quit(char *str);
+void	reset_struct(t_talk *talk);
 
 #endif

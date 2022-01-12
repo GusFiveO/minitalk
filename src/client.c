@@ -6,7 +6,7 @@
 /*   By: alorain <alorain@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:33:45 by alorain           #+#    #+#             */
-/*   Updated: 2022/01/11 16:38:37 by alorain          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:56:36 by alorain          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	send_sig(int pid, int sig)
 	if (usleep(100000) == 0)
 	{
 		tries++;
-		ft_printf("Si\n");
 		if (tries == 3)
 		{
 			ft_printf("Signal not received\n");
@@ -78,8 +77,6 @@ void	handle_sigusr(int sig)
 
 	if (sig == SIGUSR1)
 	{
-		if (bits_received % 8)
-			ft_printf("Bits lost");
 		ft_printf("Message received\n");
 	}
 	if (sig == SIGUSR2)
